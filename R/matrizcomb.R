@@ -7,8 +7,8 @@ matrizComb <-
     sd_e = 3,
     mean_c = 6,
     sd_c = 3,
-    num_experimentos = 1,
-    #num_experimentos = seq(1, 9, 2),
+    n_experiments = 1,
+    #n_experiments = seq(1, 9, 2),
     d = 2/3)
 # filler <- rep(NA, nrow(matrizComb))
 # matrizComb$d_empirico <- filler
