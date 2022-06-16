@@ -95,7 +95,7 @@ hedges_meta <- function(sample_size,
 #' @export
 #'
 #' @examples
-#' hedges_meta(10, 6, 5, 3, 3)
+#' parametric_rr_meta(10, 6, 5, 3, 3)
 parametric_rr_meta <- function(sample_size,
                                mean_e,
                                mean_c,
@@ -125,7 +125,7 @@ parametric_rr_meta <- function(sample_size,
                       sm = "ROM",
                       fixed = TRUE)
 
-  return(d$TE.fixed, d$lower.fixed, d$upper.fixed)
+  result <- list(d$TE.fixed, d$lower.fixed, d$upper.fixed)
 
 }
 
