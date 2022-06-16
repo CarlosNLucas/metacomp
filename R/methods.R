@@ -60,6 +60,42 @@ hedges_meta <- function(sample_size,
   result <- list(d$TE.fixed, d$lower.fixed, d$upper.fixed)
 }
 
+
+#' Estimated treatment effect and
+#' lower and upper confidence interval limits
+#' using the Parametric Response Ratio method
+#' [Hedges, L.; et al; 1999], also known as
+#' Ratio of Means:
+#'
+#' RR = Y_e / Y_c
+#'
+#' where
+#' RR is the response ratio
+#' Y is the mean of experimental (E) and control (C)
+#' groups
+#'
+#' which is normalized as
+#'
+#' L= Ln(RR)
+#'
+#' where L is the natural logarithm of the response
+#' ratio
+#'
+#' For one experiment or study the individual
+#' effect is calculated, for more than one
+#' the overall effect is calculated
+#'
+#' @param sample_size Number of observations
+#' @param mean_e Estimated mean in experimental group
+#' @param mean_c Estimated mean in control group
+#' @param sd_e Standard deviation
+#' @param n_experiments Number of experiments
+#'
+#' @return List of effect size, lower and upper intervals
+#' @export
+#'
+#' @examples
+#' hedges_meta(10, 6, 5, 3, 3)
 parametric_rr_meta <- function(sample_size,
                                mean_e,
                                mean_c,
