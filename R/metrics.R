@@ -1,12 +1,26 @@
-# TODO: docs
+#' Calculation of accuracy, as in the empirical probability of the
+#' meta-analysis method confidence interval (1 − α) containing the
+#' population value δ
+#'
+#' @param results List of estimated effects in format
+#'  [ effect, lower bound, upper bound ]
+#' @param d Effect of the population
+#'
+#' @return Accuracy, in range 0-1
+#' @export
+#'
+#' @examples
+#' accuracy(list(c(2,1,3), c(3,-1, 4), c(2, 1,4)), 3.2)
+#' accuracy(estimated_effects)
 accuracy <- function(results, d) {
 
-  inside_interval <- length(which(d >= results[[2]] &
-                                    d <= results[[3]]))
-  outside_interval <- length(results) - inside_interval
+  lower_bounds <- sapply(l, function(x) x[2])
+  upper_bounds <- sapply(l, function(x) x[3])
 
-  list(inside_interval = inside_interval,
-       outside_interval = outside_interval)
+  inside_interval <- length(which(d >= lower_bounds &
+                                    d <= upper_bounds))
+
+  inside_interval / length(results)
 }
 
 
