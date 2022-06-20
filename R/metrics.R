@@ -14,8 +14,8 @@
 #' accuracy(estimated_effects)
 accuracy <- function(results, d) {
 
-  lower_bounds <- sapply(l, function(x) x[2])
-  upper_bounds <- sapply(l, function(x) x[3])
+  lower_bounds <- sapply(results, function(x) x[2])
+  upper_bounds <- sapply(results, function(x) x[3])
 
   inside_interval <- length(which(d >= lower_bounds &
                                     d <= upper_bounds))
