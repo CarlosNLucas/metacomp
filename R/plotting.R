@@ -21,8 +21,20 @@ plot <- function(matrizComb, method, metric, parameter, ...) {
     geom_line()
 }
 
-plot_compare_methods <- function(matrizComb, results_1, results_2, parameter) {
-  # ggplot(matrizComb, aes(x=n_experiments))+
-  #   geom_line(aes(y=x, colour = "hedges")) +
-  #   geom_line(aes(y=y, colour = "PRR"))
+plot_compare_methods <- function(matrizComb,
+                                 method_1,
+                                 method_2,
+                                 metric,
+                                 parameter,
+                                 ...) {
+
+  results_1 <- montecarlo(matrizComb, method_1, metric)
+  results_2 <- montecarlo(matrizComb, method_2, metric)
+
+  matrizComb$results_1 <- unlist(results_1)
+  matrizComb$results_2 <- unlist(results_2)
+
+  ggplot(matrizComb, aes(x={{parameter}}))+
+    geom_line(aes(y=results_1, colour = "{{method_1}}", ...)) +
+    geom_line(aes(y=results_2, colour = "{{method_2}}", ...))
 }
