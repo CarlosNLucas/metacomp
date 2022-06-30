@@ -3,7 +3,7 @@
 #' population value δ
 #'
 #' @param results List of estimated effects in format
-#'  [ effect, lower bound, upper bound ]
+#'  ( effect, lower bound, upper bound )
 #' @param d Effect of the population
 #'
 #' @return Accuracy, in range 0-1
@@ -29,7 +29,7 @@ accuracy <- function(results, d) {
 #'
 #'
 #' @param results List of estimated effects in format
-#'  [ effect, lower bound, upper bound ]
+#'  ( effect, lower bound, upper bound )
 #'
 #' @return Empirical power, in range 0-1
 #' @export
@@ -47,7 +47,7 @@ empirical_power <- function(results) {
 #'
 #'
 #' @param results List of estimated effects in format
-#'  [ effect, lower bound, upper bound ]
+#'  ( effect, lower bound, upper bound )
 #'
 #' @return Rate of rejection, in range 0-1
 #' @export
