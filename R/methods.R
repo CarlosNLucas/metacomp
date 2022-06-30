@@ -1,8 +1,8 @@
-# probar casos extremos para generar tests necesarios
+# TODO: probar casos extremos para generar tests necesarios
 
 #' Estimated treatment effect and
 #' lower and upper confidence interval limits
-#' using Hedges method [Hedges, L.; Olkin, I.; 1985]:
+#' using Hedges method (Hedges & Olkin, 1985):
 #'
 #' d = J(N-2)(Y_e - Y_c)/S_p
 #'
@@ -64,7 +64,7 @@ hedges_meta <- function(sample_size,
 #' Estimated treatment effect and
 #' lower and upper confidence interval limits
 #' using the Parametric Response Ratio method
-#' [Hedges, L.; et al; 1999], also known as
+#' (Hedges et al, 1999), also known as
 #' Ratio of Means:
 #'
 #' RR = Y_e / Y_c
@@ -129,7 +129,7 @@ parametric_rr_meta <- function(sample_size,
 
 }
 
-# implementacion propia en nuevo paquete , con interfaz parecida a la de META
+# TODO: implementacion propia en nuevo paquete , con interfaz parecida a la de META
 non_parametric_rr_manual <- function(sample_size,
                                      mean_e,
                                      mean_c,
