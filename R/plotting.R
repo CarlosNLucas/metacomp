@@ -10,10 +10,18 @@
 #' @export
 #'
 #' @examples
-plot <- function(matrizComb, method, metric, parameter, ...) {
+plot_sim <- function(matrizComb, method, metric, parameter, ...) {
   # TODO: check parameter is one inside matrizComb
 
   results <- montecarlo(matrizComb, method, metric)
+  matrizComb$results <- unlist(results)
+
+  ggplot2::ggplot(data=matrizComb, aes(x={{parameter}}, y=results, ...)) +
+    geom_point() +
+    geom_line()
+}
+
+plot <- function(matrizComb, results, parameter, ...){
   matrizComb$results <- unlist(results)
 
   ggplot2::ggplot(data=matrizComb, aes(x={{parameter}}, y=results, ...)) +
