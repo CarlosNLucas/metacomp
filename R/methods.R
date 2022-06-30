@@ -33,14 +33,20 @@ hedges_meta <- function(sample_size,
                         mean_e,
                         mean_c,
                         sd_e,
-                        n_experiments){
+                        n_experiments,
+                        distribution = "normal"){
   e <- list()
   c <- list()
 
-  for (i in 1:n_experiments) {
-    e <- c(e, list(rnorm(sample_size, mean_e, sd_e)))
-    c <- c(c, list(rnorm(sample_size, mean_c, sd_e)))
-  }
+  samples <- sample_generator(n_experiments,
+                              sample_size,
+                              mean_e,
+                              sd_e,
+                              mean_c,
+                              sd_c,
+                              distribution)
+  e <- samples[[1]]
+  c <- samples[[2]]
 
   overall_sample_size <- rep(sample_size, n_experiments)
   overall_mean_e <- sapply(e, mean)
@@ -100,15 +106,21 @@ parametric_rr_meta <- function(sample_size,
                                mean_e,
                                mean_c,
                                sd_e,
-                               n_experiments){
+                               n_experiments,
+                               distribution = "normal"){
 
   e <- list()
   c <- list()
 
-  for (i in 1:n_experiments) {
-    e <- c(e, list(rnorm(sample_size, mean_e, sd_e)))
-    c <- c(c, list(rnorm(sample_size, mean_c, sd_e)))
-  }
+  samples <- sample_generator(n_experiments,
+                              sample_size,
+                              mean_e,
+                              sd_e,
+                              mean_c,
+                              sd_c,
+                              distribution)
+  e <- samples[[1]]
+  c <- samples[[2]]
 
   overall_sample_size <- rep(sample_size, n_experiments)
   overall_mean_e <- sapply(e, mean)
@@ -140,4 +152,44 @@ non_parametric_rr_manual <- function(sample_size,
 
   #v <- (sample_size * 2 / (sample_size ** 2) + log(rr**2) / sample_size * 4)
 
+}
+
+sample_generator <- function(n_experiments,
+                             sample_size,
+                             mean_e,
+                             sd_e,
+                             mean_c,
+                             sd_c,
+                             distribution){
+
+  e <- list()
+  c <- list()
+
+  # if (distribution == "normal") {
+  #   dist_func <- stats::rnorm
+  # } else if (distribution == "lognormal") {
+  #   dist_func <- stats::rlnorm()
+  # } else if (distribution == "truncated") {
+  #   dist_func <- envstats::rnormTrunc()
+  # }
+  # do.call( ... )
+
+  if (distribution == "normal") {
+    for (i in 1:n_experiments) {
+      e <- c(e, list(stats::rnorm(sample_size, mean_e, sd_e)))
+      c <- c(c, list(stats::rnorm(sample_size, mean_c, sd_e)))
+    }
+  } else if (distribution == "lognormal") {
+    for (i in 1:n_experiments) {
+      e <- c(e, list(stats::rlnorm(sample_size, mean_e, sd_e)))
+      c <- c(c, list(stats::rlnorm(sample_size, mean_c, sd_e)))
+    }
+  } else if (distribution == "truncated") {
+    for (i in 1:n_experiments) {
+      e <- c(e, list(EnvStats::rnormTrunc(sample_size, mean_e, sd_e, min = 0)))
+      c <- c(c, list(EnvStats::rnormTrunc(sample_size, mean_e, sd_e, min = 0)))
+    }
+  }
+
+  list(e, c)
 }
