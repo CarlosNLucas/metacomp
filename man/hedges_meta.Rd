@@ -4,7 +4,7 @@
 \alias{hedges_meta}
 \title{Estimated treatment effect and
 lower and upper confidence interval limits
-using Hedges method \link{Hedges, L.; Olkin, I.; 1985}:}
+using Hedges method (Hedges & Olkin, 1985):}
 \usage{
 hedges_meta(sample_size, mean_e, mean_c, sd_e, n_experiments)
 }

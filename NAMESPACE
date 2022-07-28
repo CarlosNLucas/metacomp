@@ -3,5 +3,7 @@
 export(accuracy)
 export(empirical_power)
 export(hedges_meta)
+export(montecarlo)
 export(parametric_rr_meta)
+export(plot)
 export(rejection_rate)

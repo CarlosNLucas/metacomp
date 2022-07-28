@@ -122,7 +122,9 @@ parametric_rr_meta <- function(sample_size,
   e <- samples[[1]]
   c <- samples[[2]]
 
+
   overall_sample_size <- rep(sample_size, n_experiments)
+  # TODO: Volver a método antiguo de bucle
   overall_mean_e <- sapply(e, mean)
   overall_mean_c <- sapply(c, mean)
   overall_sd_e   <- sapply(e, sd)
@@ -166,7 +168,7 @@ sample_generator <- function(n_experiments,
   c <- list()
 
   # if (distribution == "normal") {
-  #   dist_func <- stats::rnorm
+  #   dist_func <- stats::rnorm()
   # } else if (distribution == "lognormal") {
   #   dist_func <- stats::rlnorm()
   # } else if (distribution == "truncated") {
