@@ -2,17 +2,8 @@
 
 #' Estimated treatment effect and
 #' lower and upper confidence interval limits
-#' using Hedges method (Hedges & Olkin, 1985):
-#'
-#' d = J(N-2)(Y_e - Y_c)/S_p
-#'
-#' where
-#' d is the effect size
-#' J (N – 2) = is the correction factor
-#' Y is the mean of experimental (E) and control (C)
-#' groups
-#' Sp is the pooled standard deviation of both groups
-#' N is the number of experimental subjects of both groups (nE + nC)
+#' using Hedges method (Hedges & Olkin, 1985),
+#' implementation from package Meta.
 #'
 #' For one experiment or study the individual
 #' effect is calculated, for more than one
@@ -71,21 +62,8 @@ hedges_meta <- function(sample_size,
 #' lower and upper confidence interval limits
 #' using the Parametric Response Ratio method
 #' (Hedges et al, 1999), also known as
-#' Ratio of Means:
-#'
-#' RR = Y_e / Y_c
-#'
-#' where
-#' RR is the response ratio
-#' Y is the mean of experimental (E) and control (C)
-#' groups
-#'
-#' which is normalized as
-#'
-#' L= Ln(RR)
-#'
-#' where L is the natural logarithm of the response
-#' ratio
+#' Ratio of Means,
+#' implementation from package Meta.
 #'
 #' For one experiment or study the individual
 #' effect is calculated, for more than one
@@ -143,17 +121,12 @@ parametric_rr_meta <- function(sample_size,
 
 }
 
-# TODO: implementacion propia en nuevo paquete , con interfaz parecida a la de META
-non_parametric_rr_manual <- function(sample_size,
-                                     mean_e,
-                                     mean_c,
-                                     n_experiments){
+cliffs_delta <- function(sample_size,
+                         mean_e,
+                         mean_c,
+                         n_experiments){
 
-  rr <- mean_e / mean_c
-  l_i <- log(rr)
-
-  #v <- (sample_size * 2 / (sample_size ** 2) + log(rr**2) / sample_size * 4)
-
+  # effsize
 }
 
 sample_generator <- function(n_experiments,
