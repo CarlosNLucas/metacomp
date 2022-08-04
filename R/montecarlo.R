@@ -2,7 +2,7 @@ varEnv <- new.env()
 varEnv$NUM_VECES <- 50
 
 set_num_veces <- function(val) {
-  if (class(val) != "numeric") {
+  if (class(val) != "numeric" && class(val) != "integer") {
     stop("Value must be a number")
   }
 
@@ -27,8 +27,16 @@ get_num_veces <- function(){
 #'
 #' @examples
 montecarlo <- function(matrizComb, fun0, fun1, store=FALSE) {
+  if(class(fun0) != 'function'){
+    error("Method must be function")
+  }
+  if(class(fun1) != 'function'){
+    error("Metric must be function")
+  }
+
+
   # extract function parameters
-  params_fun0 <- formals(fun0)
+  params_fun0 <- as.list(formals(fun0))
   params_fun1 <- as.list(formals(fun1))
 
   # function output
