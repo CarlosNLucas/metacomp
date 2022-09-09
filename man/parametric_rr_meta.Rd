@@ -5,10 +5,18 @@
 \title{Estimated treatment effect and
 lower and upper confidence interval limits
 using the Parametric Response Ratio method
-\link{Hedges, L.; et al; 1999}, also known as
-Ratio of Means:}
+(Hedges et al, 1999), also known as
+Ratio of Means,
+implementation from package Meta.}
 \usage{
-parametric_rr_meta(sample_size, mean_e, mean_c, sd_e, n_experiments)
+parametric_rr_meta(
+  sample_size,
+  mean_e,
+  mean_c,
+  sd_e,
+  n_experiments,
+  distribution = "normal"
+)
 }
 \arguments{
 \item{sample_size}{Number of observations}
@@ -25,21 +33,6 @@ parametric_rr_meta(sample_size, mean_e, mean_c, sd_e, n_experiments)
 List of effect size, lower and upper intervals
 }
 \description{
-RR = Y_e / Y_c
-}
-\details{
-where
-RR is the response ratio
-Y is the mean of experimental (E) and control (C)
-groups
-
-which is normalized as
-
-L= Ln(RR)
-
-where L is the natural logarithm of the response
-ratio
-
 For one experiment or study the individual
 effect is calculated, for more than one
 the overall effect is calculated

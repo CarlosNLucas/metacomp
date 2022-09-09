@@ -9,7 +9,7 @@ empirical_power(results)
 }
 \arguments{
 \item{results}{List of estimated effects in format
-\link{ effect, lower bound, upper bound }}
+( effect, lower bound, upper bound )}
 }
 \value{
 Empirical power, in range 0-1

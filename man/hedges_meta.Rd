@@ -4,9 +4,17 @@
 \alias{hedges_meta}
 \title{Estimated treatment effect and
 lower and upper confidence interval limits
-using Hedges method (Hedges & Olkin, 1985):}
+using Hedges method (Hedges & Olkin, 1985),
+implementation from package Meta.}
 \usage{
-hedges_meta(sample_size, mean_e, mean_c, sd_e, n_experiments)
+hedges_meta(
+  sample_size,
+  mean_e,
+  mean_c,
+  sd_e,
+  n_experiments,
+  distribution = "normal"
+)
 }
 \arguments{
 \item{sample_size}{Number of observations}
@@ -23,17 +31,6 @@ hedges_meta(sample_size, mean_e, mean_c, sd_e, n_experiments)
 List of effect size, lower and upper intervals
 }
 \description{
-d = J(N-2)(Y_e - Y_c)/S_p
-}
-\details{
-where
-d is the effect size
-J (N – 2) = is the correction factor
-Y is the mean of experimental (E) and control (C)
-groups
-Sp is the pooled standard deviation of both groups
-N is the number of experimental subjects of both groups (nE + nC)
-
 For one experiment or study the individual
 effect is calculated, for more than one
 the overall effect is calculated

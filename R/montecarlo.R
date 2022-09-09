@@ -1,6 +1,12 @@
 varEnv <- new.env()
 varEnv$NUM_VECES <- 50
 
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
 set_num_veces <- function(val) {
   if (class(val) != "numeric" && class(val) != "integer") {
     stop("Value must be a number")
@@ -11,9 +17,32 @@ set_num_veces <- function(val) {
   varEnv$NUM_VECES <- val
 }
 
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
 get_num_veces <- function(){
   #get(NUM_VECES, envir = varEnv)
   varEnv$NUM_VECES
+}
+
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_number_iterations <- function(fun2, required_error, n_increment = 10, n_limit=+Inf) {
+  error <- +Inf
+  n <- 0
+  while(error > required_error && n < n_limit) {
+    n <- n + n_increment
+    set_num_veces(n)
+    error <- fun2(n)
+  }
+  n
 }
 
 #' Title
@@ -43,22 +72,26 @@ montecarlo <- function(matrizComb, fun0, fun1, store=FALSE) {
   output <- list()
 
   # we run the function for each combination of the input matrix
-  for (i in 1:nrow(matrizComb)) {
+  # if the input matrix is null, we run the loop just once
+  if(is.null(nrow(matrizComb)))
+    times <- 1
+  else
+    times <- nrow(matrizComb)
+
+  for (i in 1:times) {
     # store the results of the simulations. Each row of the input matrix
     # will be processed NUM_VECES
     #results <- rep(NA, NUM_VECES)
     results <- list()
 
-    for (j in 1:varEnv$NUM_VECES) {
-      # names extract the param names, making unnecessary to know them in the package
-      for (param in names(params_fun0)) {
-        # TODO: comprobar si estan los parametros adecuados
-        params_fun0[param] <- matrizComb[i, ][param]
-      }
-
-      # run fun0 using passing its parameters as a list
-      results <- c(results, list(do.call(fun0, params_fun0)))
+    # names extract the param names, making unnecessary to know them in the package
+    for (param in names(params_fun0)) {
+      # TODO: comprobar si estan los parametros adecuados
+      params_fun0[param] <- matrizComb[i, ][param]
     }
+
+    # run fun0 using passing its parameters as a list
+    results <- c(results, list(do.call(fun0, params_fun0)))
 
     # we do the same with fun1, but the results vector is internal, so we
     # cannot search the input matrix for it
@@ -68,7 +101,7 @@ montecarlo <- function(matrizComb, fun0, fun1, store=FALSE) {
     }
 
     # same as before, but we add the results vector
-    params_fun1$results <- results
+    params_fun1$results <- unlist(results)
     #print(typeof(params_fun1))
     output[[i]] <- do.call(fun1, params_fun1)
   }

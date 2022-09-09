@@ -10,7 +10,7 @@ accuracy(results, d)
 }
 \arguments{
 \item{results}{List of estimated effects in format
-\link{ effect, lower bound, upper bound }}
+( effect, lower bound, upper bound )}
 
 \item{d}{Effect of the population}
 }

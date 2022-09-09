@@ -8,7 +8,7 @@ rejection_rate(results)
 }
 \arguments{
 \item{results}{List of estimated effects in format
-\link{ effect, lower bound, upper bound }}
+( effect, lower bound, upper bound )}
 }
 \value{
 Rate of rejection, in range 0-1
