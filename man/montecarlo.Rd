@@ -12,3 +12,74 @@ montecarlo(matrizComb, fun0, fun1, store = FALSE)
 \description{
 Title
 }
+\examples{
+
+# Example 1: Calculation of the value of pi
+
+# Random process underlying the calculation of pi
+# using the area method
+# see, e.g., https://blogs.sas.com/content/iml/2016/03/14/monte-carlo-estimates-of-pi.html
+
+fun0 <- function() {
+  x <- runif(metacomp::get_num_veces())
+  y <- runif(metacomp::get_num_veces())
+  ifelse(sqrt(x^2+y^2) <= 1, 1, 0)
+}
+
+# Post-processing, in this case, the calculation of pi
+# The results list is provided by the metacomp::montecarlo function
+# results contains the output of fun0()
+
+fun1 <- function(results) {
+  4*sum(results[results == 1])/metacomp::get_num_veces()
+}
+
+# We set the number of samples to 1000
+metacomp::set_num_veces(1000)
+
+# and make the calculation
+metacomp::montecarlo(NULL, fun0, fun1)
+
+# Please notice that metacomp::montecarlo() return a list of lists
+# Each list element is the outcome of a different simulation
+# This can be handy in some cases, e.g., see below.
+
+
+# Example 2: Calculation of a definite integral
+
+
+# Random process underlying the calculation of an integral
+# see, e.g., https://blogs.sas.com/content/iml/2021/03/31/estimate-integral-monte-carlo.html
+
+fun0 <- function(a, b, n) {
+  # This time we don't use the metacomp::get_num_veces()
+  runif(n, a, b)
+}
+
+# Post-processing, where the area is calculated
+
+fun1 <- function(a, b, results) {
+  # Take care of the order of the parameters because f receives 2
+  (b-a)*mean(as.numeric(lapply(results, f, a = 4)))
+}
+
+# The function to integrate should be defined somewhere
+
+f <- function(x, a) {
+  x^(a-1)*exp(-x)
+}
+
+# We can pass additional parameters to metacomp::montecarlo() using a matrix
+
+m <- expand.grid(
+  a = 1,
+  b = 3.5,
+  n = c(1000, 10000, 100000)
+)
+
+
+# We make the calculation. Notice that the integral is calculated
+# several times. Each row of m corresponds with a different calculation
+metacomp::montecarlo(m, fun0, fun1)
+
+}
