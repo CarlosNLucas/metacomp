@@ -11,8 +11,10 @@ set_num_veces <- function(val) {
   if (class(val) != "numeric" && class(val) != "integer") {
     stop("Value must be a number")
   }
-
-  val <- abs(as.integer(val))
+  if (val < 2) {
+    stop("Value must be 2 or higher")
+  }
+  val <- as.integer(val)
 
   varEnv$NUM_VECES <- val
 }
@@ -126,10 +128,10 @@ get_number_iterations <- function(fun2, required_error, n_increment = 10, n_limi
 #'
 montecarlo <- function(matrizComb, fun0, fun1, store=FALSE) {
   if(class(fun0) != 'function'){
-    error("Method must be function")
+    stop("Method must be function")
   }
   if(class(fun1) != 'function'){
-    error("Metric must be function")
+    stop("Metric must be function")
   }
 
 
