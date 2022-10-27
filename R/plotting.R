@@ -24,9 +24,9 @@ plot_sim <- function(matrizComb, method, metric, parameter, ...) {
 plot <- function(matrizComb, results, parameter, ...){
   matrizComb$results <- unlist(results)
 
-  ggplot2::ggplot(data=matrizComb, aes(x={{parameter}}, y=results, ...)) +
-    geom_point() +
-    geom_line()
+  ggplot2::ggplot(data=matrizComb, ggplot2::aes(x={{parameter}}, y=results, ...)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line()
 }
 
 plot_compare_methods <- function(matrizComb,
