@@ -1,5 +1,5 @@
 varEnv <- new.env()
-varEnv$NUM_VECES <- 50
+varEnv$NUM_VECES <- 10
 
 #' Title
 #'
@@ -126,14 +126,13 @@ get_number_iterations <- function(fun2, required_error, n_increment = 10, n_limi
 #' # several times. Each row of m corresponds with a different calculation
 #' metacomp::montecarlo(m, fun0, fun1)
 #'
-montecarlo <- function(matrizComb, fun0, fun1, store=FALSE) {
+montecarlo <- function(matrizComb, fun0, fun1) {
   if(class(fun0) != 'function'){
     stop("Method must be function")
   }
   if(class(fun1) != 'function'){
     stop("Metric must be function")
   }
-
 
   # extract function parameters
   params_fun0 <- as.list(formals(fun0))
@@ -167,27 +166,84 @@ montecarlo <- function(matrizComb, fun0, fun1, store=FALSE) {
     # we do the same with fun1, but the results vector is internal, so we
     # cannot search the input matrix for it
     for (param in names(params_fun1)) {
-      if(param != "results")
+      if(param != "results" & param != "effect_size")
         params_fun1[param] <- matrizComb[i, ][param]
     }
 
     # same as before, but we add the results vector
-    params_fun1$results <- unlist(results)
-    #print(typeof(params_fun1))
+    params_fun1$results <- results
+    params_fun1$effect_size <- effect_size
     output[[i]] <- do.call(fun1, params_fun1)
-  }
-
-  if (store) {
-    #TODO: escribir en batch cada X calculos de la matriz?
-    #      csv, RDA, ...?
-    matrizComb$results <- unlist(output)
-    write.csv(matrizComb, "experiment_data.csv", row.names = TRUE)
   }
 
   output
 
 }
 
-# TODO: adaptar a uso montecarlo(matriz, metodo = "hedges", "accuracy")
-# nivel adicional de asbtraccion
-# x <- montecarlo(matrizComb, parametric_rr_meta, empirical_power)
+
+
+#' Title
+#'
+#' @param matrizComb
+#' @param fun0
+#' @param fun1
+#'
+#' @return
+#' @export
+#'
+#' @examples
+montecarlo_meta <- function(matrizComb, fun0, fun1) {
+  if(class(fun0) != 'function'){
+    stop("Method must be function")
+  }
+  if(class(fun1) != 'function'){
+    stop("Metric must be function")
+  }
+
+  # extract function parameters
+  params_fun0 <- as.list(formals(fun0))
+  params_fun1 <- as.list(formals(fun1))
+
+  # function output
+  output <- list()
+
+  # we run the function for each combination of the input matrix
+  # if the input matrix is null, we run the loop just once
+  if(is.null(nrow(matrizComb)))
+    times <- 1
+  else
+    times <- nrow(matrizComb)
+
+  for (i in 1:times) {
+    # names extract the param names, making unnecessary to know them in the package
+    for (param in names(params_fun0)) {
+      if(param != "return")
+        # TODO: comprobar si estan los parametros adecuados
+        params_fun0[param] <- matrizComb[i, ][param]
+    }
+
+    results <- list()
+
+    # run fun0 using passing its parameters as a list
+    params_fun0$return <- "population effect"
+    population_effect <- do.call(fun0, params_fun0)
+
+    params_fun0$return <- "limits"
+    for (j in 1:get_num_veces()) {
+      results[[j]] <- do.call(fun0, params_fun0)
+    }
+
+    # we do the same with fun1, but the results vector is internal, so we
+    # cannot search the input matrix for it
+    for (param in names(params_fun1)) {
+      if(param != "results" && param != "population_effect")
+        params_fun1[param] <- matrizComb[i, ][param]
+    }
+
+    # same as before, but we add the results vector
+    params_fun1[["results"]] <- results
+    params_fun1[["population_effect"]] <- population_effect
+    output[[i]] <- do.call(fun1, params_fun1)
+  }
+  output
+}
