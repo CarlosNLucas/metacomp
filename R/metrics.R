@@ -12,13 +12,13 @@
 #' @examples
 #' accuracy(list(c(2,1,3), c(3,-1, 4), c(2, 1,4)), 3.2)
 #' accuracy(estimated_effects)
-accuracy <- function(results, d) {
+accuracy <- function(results, population_effect) {
 
-  lower_bounds <- sapply(results, function(x) x[2])
-  upper_bounds <- sapply(results, function(x) x[3])
+  lower_bounds <- sapply(results, function(x) x[[1]])
+  upper_bounds <- sapply(results, function(x) x[[2]])
 
-  inside_interval <- length(which(d >= lower_bounds &
-                                    d <= upper_bounds))
+  inside_interval <- length(which(population_effect >= lower_bounds &
+                                  population_effect <= upper_bounds))
 
   inside_interval / length(results)
 }
