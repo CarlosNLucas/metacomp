@@ -1,5 +1,3 @@
-# TODO: probar casos extremos para generar tests necesarios
-
 #' Estimated treatment effect and
 #' lower and upper confidence interval limits
 #' using Hedges method (Hedges & Olkin, 1985),
@@ -15,17 +13,19 @@
 #' @param sd_e Standard deviation
 #' @param n_experiments Number of experiments
 #'
-#' @return List of effect size, lower and upper intervals
+#' @return CAMBIAR PARAMETROS DEVUELTOS
 #' @export
 #'
 #' @examples
 #' hedges_meta(10, 6, 5, 3, 3)
 hedges_meta <- function(sample_size,
                         mean_e,
-                        mean_c,
                         sd_e,
+                        mean_c,
+                        sd_c,
                         n_experiments,
-                        distribution = "normal"){
+                        distribution = "normal",
+                        return = NULL){
   e <- list()
   c <- list()
 
@@ -54,7 +54,20 @@ hedges_meta <- function(sample_size,
                       sm = "SMD",
                       fixed = TRUE)
 
-  result <- list(d$TE.fixed, d$lower.fixed, d$upper.fixed)
+  if(return == "limits") {
+    result <- list(d$lower.fixed, d$upper.fixed)
+  }
+
+  if(return == "population effect") {
+    result <- (mean_e - mean_c) / ((sd_e + sd_c) / 2)
+  }
+
+  if(return == "sample effect") {
+    result <- d$TE.fixed
+  }
+
+  result
+
 }
 
 
@@ -82,10 +95,12 @@ hedges_meta <- function(sample_size,
 #' parametric_rr_meta(10, 6, 5, 3, 3)
 parametric_rr_meta <- function(sample_size,
                                mean_e,
-                               mean_c,
                                sd_e,
+                               mean_c,
+                               sd_c,
                                n_experiments,
-                               distribution = "normal"){
+                               distribution = "normal",
+                               return = NULL){
 
   e <- list()
   c <- list()
@@ -108,17 +123,28 @@ parametric_rr_meta <- function(sample_size,
   overall_sd_e   <- sapply(e, sd)
   overall_sd_c   <- sapply(c, sd)
 
-  d <- meta::metacont(overall_sample_size,
-                      overall_mean_e,
-                      overall_sd_e,
-                      overall_sample_size,
-                      overall_mean_c,
-                      overall_sd_c,
-                      sm = "ROM",
-                      fixed = TRUE)
+  rr <- meta::metacont(overall_sample_size,
+                       overall_mean_e,
+                       overall_sd_e,
+                       overall_sample_size,
+                       overall_mean_c,
+                       overall_sd_c,
+                       sm = "ROM",
+                       fixed = TRUE)
 
-  result <- list(d$TE.fixed, d$lower.fixed, d$upper.fixed)
+  if(return == "limits") {
+    result <- list(rr$lower.fixed, rr$upper.fixed)
+  }
 
+  if(return == "population effect") {
+    result <- log(mean_e / mean_c)
+  }
+
+  if(return == "sample effect") {
+    result <- rr$TE.fixed
+  }
+
+  result
 }
 
 cliffs_delta <- function(sample_size,
