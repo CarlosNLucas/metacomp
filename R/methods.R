@@ -52,7 +52,7 @@ hedges_meta <- function(sample_size,
                       overall_mean_c,
                       overall_sd_c,
                       sm = "SMD",
-                      fixed = TRUE)
+                      random = FALSE)
 
   if(return == "limits") {
     result <- list(d$lower.fixed, d$upper.fixed)
@@ -130,7 +130,8 @@ parametric_rr_meta <- function(sample_size,
                        overall_mean_c,
                        overall_sd_c,
                        sm = "ROM",
-                       fixed = TRUE)
+                       random = FALSE,
+                       backtransf = TRUE)
 
   if(return == "limits") {
     result <- list(rr$lower.fixed, rr$upper.fixed)
