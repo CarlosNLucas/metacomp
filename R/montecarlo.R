@@ -49,9 +49,9 @@ get_number_iterations <- function(fun2, required_error, n_increment = 10, n_limi
 
 #' Title
 #'
-#' @param matrizComb
-#' @param fun0
-#' @param fun1
+#' @param
+#' @param
+#' @param
 #'
 #' @return
 #' @export
@@ -126,7 +126,11 @@ get_number_iterations <- function(fun2, required_error, n_increment = 10, n_limi
 #' # several times. Each row of m corresponds with a different calculation
 #' metacomp::montecarlo(m, fun0, fun1)
 #'
-montecarlo <- function(matrizComb, fun0, fun1) {
+montecarlo <- function(matrizComb, random_generation_function, metric_calculation_function) {
+
+  fun0 <- get(random_generation_function)
+  fun1 <- get(metric_calculation_function)
+
   if(class(fun0) != 'function'){
     stop("Method must be function")
   }
@@ -192,7 +196,11 @@ montecarlo <- function(matrizComb, fun0, fun1) {
 #' @export
 #'
 #' @examples
-montecarlo_meta <- function(matrizComb, fun0, fun1) {
+montecarlo_meta <- function(matrizComb, random_generation_function, metric_calculation_function) {
+
+  fun0 <- get(random_generation_function)
+  fun1 <- get(metric_calculation_function)
+
   if(class(fun0) != 'function'){
     stop("Method must be function")
   }
