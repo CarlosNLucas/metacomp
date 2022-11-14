@@ -29,30 +29,25 @@ compare <- function(methods,
     results <- c(results, list(montecarlo_meta(parameter_matrix, methods[[i]], metric)))
   }
 
-  method_names <- as.character(substitute(methods))
-  method_names <- method_names[2:length(method_names)]
-  metric_name  <- as.character(substitute(metric))
-  metric_name <- paste(metric_name[2], "::", metric_name[3], sep="")
-
   if(overall){
     scores <- c()
     #Get average from each result array
     for (i in 1:length(methods)) {
       scores <- c(scores, mean(unlist(results[[i]])))
     }
-    return(cbind(method_names, scores))
+    return(cbind(methods, scores))
 
     } else{
 
-      parameter_matrix["methods"] <- NA
-      parameter_matrix[[metric_name]] <- NA
+      parameter_matrix["method"] <- NA
+      parameter_matrix[[metric]] <- NA
 
       tmp_methods <- c()
       tmp_metric  <- c()
 
       for (i in 1:length(methods)) {
         tmp_metric <- c(tmp_metric, unlist(results[[i]]))
-        tmp_methods <- c(tmp_methods, rep(method_names[i], length(unlist(results[[i]]))))
+        tmp_methods <- c(tmp_methods, rep(methods[i], length(unlist(results[[i]]))))
       }
 
       tmp_parameter_matrix <- parameter_matrix
@@ -60,8 +55,8 @@ compare <- function(methods,
         parameter_matrix <- rbind(parameter_matrix, tmp_parameter_matrix)
       }
 
-      parameter_matrix[["methods"]] <- tmp_methods
-      parameter_matrix[[metric_name]] <- tmp_metric
+      parameter_matrix[["method"]] <- tmp_methods
+      parameter_matrix[[metric]] <- tmp_metric
       return(parameter_matrix)
   }
 }
