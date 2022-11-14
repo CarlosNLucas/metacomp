@@ -13,7 +13,7 @@ decide <- function(methods,
                    parameter_of_interest = "") {
 
   if(parameter_of_interest == "")
-    error("The paraneter for decision making has to be explicitly indicated")
+    stop("The parameter for decision making has to be explicitly indicated")
 
   comparison_results <- metacomp::compare(methods,
                                 metric,
@@ -24,7 +24,7 @@ decide <- function(methods,
                                 overall = FALSE)
 
   if(!(parameter_of_interest %in% names(comparison_results)))
-    error("The specified paraneter does not appear in the results")
+    stop("The specified parameter does not appear in the results")
 
   tmp_results <- comparison_results[c("method", parameter_of_interest)]
   tmp_results <- tmp_results[!duplicated(tmp_results),]
