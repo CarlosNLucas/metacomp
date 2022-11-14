@@ -12,10 +12,12 @@ implementation from package Meta.}
 parametric_rr_meta(
   sample_size,
   mean_e,
-  mean_c,
   sd_e,
+  mean_c,
+  sd_c,
   n_experiments,
-  distribution = "normal"
+  distribution = "normal",
+  return = NULL
 )
 }
 \arguments{
@@ -23,9 +25,9 @@ parametric_rr_meta(
 
 \item{mean_e}{Estimated mean in experimental group}
 
-\item{mean_c}{Estimated mean in control group}
-
 \item{sd_e}{Standard deviation}
+
+\item{mean_c}{Estimated mean in control group}
 
 \item{n_experiments}{Number of experiments}
 }

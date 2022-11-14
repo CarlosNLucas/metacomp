@@ -4,10 +4,7 @@
 \alias{montecarlo}
 \title{Title}
 \usage{
-montecarlo(matrizComb, fun0, fun1, store = FALSE)
-}
-\arguments{
-\item{fun1}{}
+montecarlo(matrizComb, random_generation_function, metric_calculation_function)
 }
 \description{
 Title

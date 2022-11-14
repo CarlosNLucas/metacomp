@@ -6,7 +6,7 @@
 meta-analysis method confidence interval (1 − α) containing the
 population value δ}
 \usage{
-accuracy(results, d)
+accuracy(results, population_effect)
 }
 \arguments{
 \item{results}{List of estimated effects in format

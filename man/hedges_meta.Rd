@@ -10,10 +10,12 @@ implementation from package Meta.}
 hedges_meta(
   sample_size,
   mean_e,
-  mean_c,
   sd_e,
+  mean_c,
+  sd_c,
   n_experiments,
-  distribution = "normal"
+  distribution = "normal",
+  return = NULL
 )
 }
 \arguments{
@@ -21,14 +23,14 @@ hedges_meta(
 
 \item{mean_e}{Estimated mean in experimental group}
 
-\item{mean_c}{Estimated mean in control group}
-
 \item{sd_e}{Standard deviation}
+
+\item{mean_c}{Estimated mean in control group}
 
 \item{n_experiments}{Number of experiments}
 }
 \value{
-List of effect size, lower and upper intervals
+CAMBIAR PARAMETROS DEVUELTOS
 }
 \description{
 For one experiment or study the individual
