@@ -34,16 +34,41 @@ plot_compare_methods <- function(matrizComb,
 
   require(ggplot2)
 
-  metric_name  <- as.character(substitute(metric))
-  metric_name <- paste(metric_name[2], "::", metric_name[3], sep="")
-
   parameter <- sym(parameter)
-  metric_name <- sym(metric_name)
+  metric <- sym(metric)
 
-  ggplot(matrizComb, aes(x = !!parameter,
-                         y = !!metric_name,
-                         group = methods,
-                         colour = methods)) +
+  p <- ggplot(matrizComb, aes(x = !!parameter,
+                         y = !!metric,
+                         group = method,
+                         colour = method)) +
   stat_summary(geom = "line",
                fun = mean)
+
+  print(p)
+}
+
+#' Plot
+#'
+#' @param matrizComb
+#' @param method
+#' @param parameter
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_choose_method <- function(equivalences, ...) {
+
+  require(ggplot2)
+  require(scales)
+
+col1name <- sym(names(equivalences)[1])
+col2name <- sym(names(equivalences)[2])
+p <- ggplot(equivalences, aes(x=!!col1name,
+                          y=!!col2name)) +
+  geom_point() +
+  scale_y_continuous(breaks= pretty_breaks()) +
+  geom_smooth(method = lm, aes(colour="regression line"))
+
+print(p)
 }
