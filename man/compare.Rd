@@ -2,7 +2,7 @@
 % Please edit documentation in R/compare.R
 \name{compare}
 \alias{compare}
-\title{Title}
+\title{Compare a list of methods for a metric given a group of population values}
 \usage{
 compare(
   methods,
@@ -19,6 +19,34 @@ compare(
   overall = TRUE
 )
 }
+\arguments{
+\item{methods}{list of methods}
+
+\item{metric}{metric to evaluate}
+
+\item{min_n_experiments}{minimum number of experiments}
+
+\item{max_n_experiments}{maximum number of experiments}
+
+\item{min_sample_size}{minimum number of sample size}
+
+\item{max_sample_size}{maximum number of sample size}
+
+\item{mean_e}{mean in experimental group}
+
+\item{mean_c}{mean in control group}
+
+\item{sd_e}{Standard deviation in experimental group}
+
+\item{sd_c}{dard deviation in control group}
+
+\item{distribution}{Distibution model}
+
+\item{overall}{Overall effect}
+}
+\value{
+results and parameters matrix
+}
 \description{
-Title
+Compare a list of methods for a metric given a group of population values
 }

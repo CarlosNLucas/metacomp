@@ -25,14 +25,21 @@ parametric_rr_meta(
 
 \item{mean_e}{Estimated mean in experimental group}
 
-\item{sd_e}{Standard deviation}
+\item{sd_e}{Standard deviation in experimental group}
 
 \item{mean_c}{Estimated mean in control group}
 
+\item{sd_c}{Standard deviation in control group}
+
 \item{n_experiments}{Number of experiments}
+
+\item{distribution}{Distibution model}
+
+\item{return}{Return mode}
 }
 \value{
-List of effect size, lower and upper intervals
+Bounds, population effect or sample size based
+on parameter return
 }
 \description{
 For one experiment or study the individual
@@ -40,5 +47,5 @@ effect is calculated, for more than one
 the overall effect is calculated
 }
 \examples{
-parametric_rr_meta(10, 6, 5, 3, 3)
+hedges_meta(10, 10, 3, 8, 3, 12, "population effect")
 }

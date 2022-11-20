@@ -21,26 +21,26 @@ matrix_incomplete <-
 not_a_matrix <- "foul"
 
 #Sanity check
-test_that("get_num_veces works", {
-  expect_equal(varEnv$NUM_VECES, get_num_veces())
+test_that("get_n_iterations works", {
+  expect_equal(var_env$n_iterations, get_n_iterations())
 })
 
 #MONT-2
-test_that("set_num_veces works", {
+test_that("set_n_iterations works", {
   num <- 21
-  set_num_veces(num)
-  expect_equal(varEnv$NUM_VECES, num)
+  set_n_iterations(num)
+  expect_equal(var_env$n_iterations, num)
 })
 
 #MONT-7
-test_that("num_veces is not Integer or Numerical", {
+test_that("n_iterations is not Integer or Numerical", {
   not_num <- "21"
-  expect_error(set_num_veces(num))
+  expect_error(set_n_iterations(num))
 })
 
 # Set variable to low number for short loop execution
-prev_val <- get_num_veces()
-set_num_veces(10)
+prev_val <- get_n_iterations()
+set_n_iterations(10)
 
 # MONT-1
 test_that("montecarlo works", {
@@ -90,7 +90,7 @@ test_that("method/metric parameters
 
 # -- Montecarlo Pi convergence test --
 
-set_num_veces(50)
+set_n_iterations(50)
 
 pi_matrix <- expand.grid(n = c(100,1000),
                          test = "test") #  ??? Fix
@@ -137,4 +137,4 @@ test_that("Montecarlo internally works", {
   }
 })
 
-set_num_veces(prev_val)
+set_n_iterations(prev_val)

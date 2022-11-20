@@ -2,15 +2,28 @@
 % Please edit documentation in R/montecarlo.R
 \name{montecarlo}
 \alias{montecarlo}
-\title{Title}
+\title{Perform Monte Carlo simulations. See examples}
 \usage{
-montecarlo(matrizComb, random_generation_function, metric_calculation_function)
+montecarlo(
+  matrix_comb,
+  random_generation_function,
+  metric_calculation_function
+)
+}
+\arguments{
+\item{matrix_comb}{Population parameters}
+
+\item{random_generation_function}{random generation function}
+
+\item{metric_calculation_function}{metric calculation function}
+}
+\value{
+Results of Monte Carlo simulations
 }
 \description{
-Title
+Perform Monte Carlo simulations. See examples
 }
 \examples{
-
 # Example 1: Calculation of the value of pi
 
 # Random process underlying the calculation of pi
@@ -18,9 +31,9 @@ Title
 # see, e.g., https://blogs.sas.com/content/iml/2016/03/14/monte-carlo-estimates-of-pi.html
 
 fun0 <- function() {
-  x <- runif(metacomp::get_num_veces())
-  y <- runif(metacomp::get_num_veces())
-  ifelse(sqrt(x^2+y^2) <= 1, 1, 0)
+  x <- runif(metacomp::get_n_iterations())
+  y <- runif(metacomp::get_n_iterations())
+  ifelse(sqrt(x^2 + y^2) <= 1, 1, 0)
 }
 
 # Post-processing, in this case, the calculation of pi
@@ -28,11 +41,11 @@ fun0 <- function() {
 # results contains the output of fun0()
 
 fun1 <- function(results) {
-  4*sum(results[results == 1])/metacomp::get_num_veces()
+  4 * sum(results[results == 1]) / metacomp::get_n_iterations()
 }
 
 # We set the number of samples to 1000
-metacomp::set_num_veces(1000)
+metacomp::set_n_iterations(1000)
 
 # and make the calculation
 metacomp::montecarlo(NULL, fun0, fun1)
@@ -49,7 +62,7 @@ metacomp::montecarlo(NULL, fun0, fun1)
 # see, e.g., https://blogs.sas.com/content/iml/2021/03/31/estimate-integral-monte-carlo.html
 
 fun0 <- function(a, b, n) {
-  # This time we don't use the metacomp::get_num_veces()
+  # This time we don't use the metacomp::get_n_iterations()
   runif(n, a, b)
 }
 
@@ -57,13 +70,13 @@ fun0 <- function(a, b, n) {
 
 fun1 <- function(a, b, results) {
   # Take care of the order of the parameters because f receives 2
-  (b-a)*mean(as.numeric(lapply(results, f, a = 4)))
+  (b - a) * mean(as.numeric(lapply(results, f, a = 4)))
 }
 
 # The function to integrate should be defined somewhere
 
 f <- function(x, a) {
-  x^(a-1)*exp(-x)
+  x^(a - 1) * exp(-x)
 }
 
 # We can pass additional parameters to metacomp::montecarlo() using a matrix

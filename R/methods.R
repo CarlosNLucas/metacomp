@@ -10,14 +10,18 @@
 #' @param sample_size Number of observations
 #' @param mean_e Estimated mean in experimental group
 #' @param mean_c Estimated mean in control group
-#' @param sd_e Standard deviation
+#' @param sd_e Standard deviation in experimental group
+#' @param sd_c Standard deviation in control group
 #' @param n_experiments Number of experiments
+#' @param distribution Distibution model
+#' @param return Return mode
 #'
-#' @return CAMBIAR PARAMETROS DEVUELTOS
+#' @return Bounds, population effect or sample size based
+#' on parameter return
 #' @export
 #'
 #' @examples
-#' hedges_meta(10, 6, 5, 3, 3)
+#' hedges_meta(10, 10, 3, 8, 3, 12, "population effect")
 hedges_meta <- function(sample_size,
                         mean_e,
                         sd_e,
@@ -25,7 +29,7 @@ hedges_meta <- function(sample_size,
                         sd_c,
                         n_experiments,
                         distribution = "normal",
-                        return = NULL){
+                        return = NULL) {
   e <- list()
   c <- list()
 
@@ -54,15 +58,15 @@ hedges_meta <- function(sample_size,
                       sm = "SMD",
                       random = FALSE)
 
-  if(return == "limits") {
+  if (return == "limits") {
     result <- list(d$lower.fixed, d$upper.fixed)
   }
 
-  if(return == "population effect") {
+  if (return == "population effect") {
     result <- (mean_e - mean_c) / ((sd_e + sd_c) / 2)
   }
 
-  if(return == "sample effect") {
+  if (return == "sample effect") {
     result <- d$TE.fixed
   }
 
@@ -85,14 +89,18 @@ hedges_meta <- function(sample_size,
 #' @param sample_size Number of observations
 #' @param mean_e Estimated mean in experimental group
 #' @param mean_c Estimated mean in control group
-#' @param sd_e Standard deviation
+#' @param sd_e Standard deviation in experimental group
+#' @param sd_c Standard deviation in control group
 #' @param n_experiments Number of experiments
+#' @param distribution Distibution model
+#' @param return Return mode
 #'
-#' @return List of effect size, lower and upper intervals
+#' @return Bounds, population effect or sample size based
+#' on parameter return
 #' @export
 #'
 #' @examples
-#' parametric_rr_meta(10, 6, 5, 3, 3)
+#' hedges_meta(10, 10, 3, 8, 3, 12, "population effect")
 parametric_rr_meta <- function(sample_size,
                                mean_e,
                                sd_e,
@@ -100,7 +108,7 @@ parametric_rr_meta <- function(sample_size,
                                sd_c,
                                n_experiments,
                                distribution = "normal",
-                               return = NULL){
+                               return = NULL) {
 
   e <- list()
   c <- list()
@@ -133,48 +141,49 @@ parametric_rr_meta <- function(sample_size,
                        random = FALSE,
                        backtransf = TRUE)
 
-  if(return == "limits") {
+  if (return == "limits") {
     result <- list(rr$lower.fixed, rr$upper.fixed)
   }
 
-  if(return == "population effect") {
+  if (return == "population effect") {
     result <- log(mean_e / mean_c)
   }
 
-  if(return == "sample effect") {
+  if (return == "sample effect") {
     result <- rr$TE.fixed
   }
 
   result
 }
 
-cliffs_delta <- function(sample_size,
-                         mean_e,
-                         mean_c,
-                         n_experiments){
 
-  # effsize
-}
+#' lower and upper confidence interval limits
 
+#'
+#' @param n_experiments Number of experiments
+#' @param sample_size Number of observations
+#' @param mean_e Estimated mean in experimental group
+#' @param sd_e Standard deviation in experimental group
+#' @param mean_c Estimated mean in control group
+#' @param sd_c Standard deviation in control group
+#' @param distribution Distibution model
+
+#' @return List of generated samples for
+#' experimental and control group
+#' @export
+#'
+#' @examples
+#' sample_generator(12, 50, 6, 3, 5, 3, "normal")
 sample_generator <- function(n_experiments,
                              sample_size,
                              mean_e,
                              sd_e,
                              mean_c,
                              sd_c,
-                             distribution){
+                             distribution) {
 
   e <- list()
   c <- list()
-
-  # if (distribution == "normal") {
-  #   dist_func <- stats::rnorm()
-  # } else if (distribution == "lognormal") {
-  #   dist_func <- stats::rlnorm()
-  # } else if (distribution == "truncated") {
-  #   dist_func <- envstats::rnormTrunc()
-  # }
-  # do.call( ... )
 
   if (distribution == "normal") {
     for (i in 1:n_experiments) {

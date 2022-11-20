@@ -2,16 +2,15 @@
 #' meta-analysis method confidence interval (1 − α) containing the
 #' population value δ
 #'
-#' @param results List of estimated effects in format
-#'  ( effect, lower bound, upper bound )
-#' @param d Effect of the population
+#' @param results List of estimated effects bounds in format
+#'  ( lower bound, upper bound )
+#' @param population_effect Effect of the population
 #'
 #' @return Accuracy, in range 0-1
 #' @export
 #'
 #' @examples
-#' accuracy(list(c(2,1,3), c(3,-1, 4), c(2, 1,4)), 3.2)
-#' accuracy(estimated_effects)
+#' accuracy(list(c(1,3), c(-1, 4), c(1,4)), 3.2)
 accuracy <- function(results, population_effect) {
 
   lower_bounds <- sapply(results, function(x) x[[1]])
@@ -28,34 +27,38 @@ accuracy <- function(results, population_effect) {
 #' for a list of estimated effects
 #'
 #'
-#' @param results List of estimated effects in format
-#'  ( effect, lower bound, upper bound )
+#' @param results List of estimated effects bounds in format
+#'  ( lower bound, upper bound )
+#' @param population_effect Effect of the population
 #'
 #' @return Empirical power, in range 0-1
 #' @export
 #'
 #' @examples
-#' rejection_rate(list(c(2,1,3), c(3,-1, 4), c(2, 1,4)))
-#' rejection_rate(estimated_effects)
-empirical_power <- function(results) {
+#' rejection_rate(list(c(1,3), c(-1, 4), c(1,4)), 3.2)
+empirical_power <- function(results, population_effect) {
+  hedges_bound <- 0
+  lower_bounds <- sapply(results, function(x) x[[1]])
 
-  1-(length(which(results[[2]] < 0))/length(results))
+  1 - (length(which(lower_bounds < hedges_bound)) / length(results))
 }
 
 
 #' Calculation of rejection rate for a list of estimated effects
 #'
 #'
-#' @param results List of estimated effects in format
-#'  ( effect, lower bound, upper bound )
+#' @param results List of estimated effects bounds in format
+#'  ( lower bound, upper bound )
+#' @param population_effect Effect of the population
 #'
 #' @return Rate of rejection, in range 0-1
 #' @export
 #'
 #' @examples
-#' rejection_rate(list(c(2,1,3), c(3,-1, 4), c(2, 1,4)))
-#' rejection_rate(estimated_effects)
-rejection_rate <- function(results) {
+#' rejection_rate(list(list(c(1,3), c(-1, 4), c(1,4)), 3.2)
+rejection_rate <- function(results, population_effect) {
+  hedges_bound <- 0
+  lower_bounds <- sapply(results, function(x) x[[1]])
 
-  1-(length(which(results[[2]] > 0))/length(results))
+  1 - (length(which(lower_bounds > hedges_bound)) / length(results))
 }

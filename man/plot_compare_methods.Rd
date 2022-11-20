@@ -2,13 +2,20 @@
 % Please edit documentation in R/plotting.R
 \name{plot_compare_methods}
 \alias{plot_compare_methods}
-\title{Plot}
+\title{Plot a comparison of methods}
 \usage{
-plot_compare_methods(matrizComb, metric, parameter, ...)
+plot_compare_methods(matrix_comb, metric, parameter, ...)
 }
 \arguments{
-\item{parameter}{}
+\item{matrix_comb}{methods and comparison information}
+
+\item{metric}{metric used in comparison to plot in vertical axis}
+
+\item{parameter}{parameter of interest to plot in horizontal axis}
+}
+\value{
+Graphical plot
 }
 \description{
-Plot
+Plot a comparison of methods
 }

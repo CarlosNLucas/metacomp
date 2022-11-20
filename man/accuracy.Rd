@@ -9,10 +9,10 @@ population value δ}
 accuracy(results, population_effect)
 }
 \arguments{
-\item{results}{List of estimated effects in format
-( effect, lower bound, upper bound )}
+\item{results}{List of estimated effects bounds in format
+( lower bound, upper bound )}
 
-\item{d}{Effect of the population}
+\item{population_effect}{Effect of the population}
 }
 \value{
 Accuracy, in range 0-1
@@ -23,6 +23,5 @@ meta-analysis method confidence interval (1 − α) containing the
 population value δ
 }
 \examples{
-accuracy(list(c(2,1,3), c(3,-1, 4), c(2, 1,4)), 3.2)
-accuracy(estimated_effects)
+accuracy(list(c(1,3), c(-1, 4), c(1,4)), 3.2)
 }

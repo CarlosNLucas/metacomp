@@ -2,13 +2,16 @@
 % Please edit documentation in R/plotting.R
 \name{plot_choose_method}
 \alias{plot_choose_method}
-\title{Plot}
+\title{Plot metric equivalences between two methods}
 \usage{
 plot_choose_method(equivalences, ...)
 }
 \arguments{
-\item{parameter}{}
+\item{equivalences}{metric equivalences between two methods}
+}
+\value{
+a plot
 }
 \description{
-Plot
+Plot metric equivalences between two methods
 }

@@ -5,11 +5,13 @@
 \title{Calculation of empirical power, also known as acceptance rate,
 for a list of estimated effects}
 \usage{
-empirical_power(results)
+empirical_power(results, population_effect)
 }
 \arguments{
-\item{results}{List of estimated effects in format
-( effect, lower bound, upper bound )}
+\item{results}{List of estimated effects bounds in format
+( lower bound, upper bound )}
+
+\item{population_effect}{Effect of the population}
 }
 \value{
 Empirical power, in range 0-1
@@ -19,6 +21,5 @@ Calculation of empirical power, also known as acceptance rate,
 for a list of estimated effects
 }
 \examples{
-rejection_rate(list(c(2,1,3), c(3,-1, 4), c(2, 1,4)))
-rejection_rate(estimated_effects)
+rejection_rate(list(c(1,3), c(-1, 4), c(1,4)), 3.2)
 }

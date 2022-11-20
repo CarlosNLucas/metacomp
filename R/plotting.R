@@ -1,74 +1,60 @@
-plot_sim <- function(matrizComb, method, metric, parameter, ...) {
-  # TODO: check parameter is one inside matrizComb
-
-  results <- montecarlo(matrizComb, method, metric)
-  matrizComb$results <- unlist(results)
-
-  ggplot2::ggplot(data=matrizComb, aes(x={{parameter}}, y=results, ...)) +
-    geom_point() +
-    geom_line()
-}
-
-plot <- function(matrizComb, results, parameter, ...){
-  matrizComb$results <- unlist(results)
-
-  ggplot2::ggplot(data=matrizComb, ggplot2::aes(x={{parameter}}, y=results, ...)) +
-    ggplot2::geom_point() +
-    ggplot2::geom_line()
-}
-
-#' Plot
+#' Plot a comparison of methods
 #'
-#' @param matrizComb
-#' @param method
-#' @param parameter
+#' @param matrix_comb methods and comparison information
+#' @param metric metric used in comparison to plot in vertical axis
+#' @param parameter parameter of interest to plot in horizontal axis
 #'
-#' @return
+#' @return Graphical plot
 #' @export
 #'
-#' @examples
-plot_compare_methods <- function(matrizComb,
+plot_compare_methods <- function(matrix_comb,
                                  metric,
                                  parameter,
                                  ...) {
-
   require(ggplot2)
 
   parameter <- sym(parameter)
   metric <- sym(metric)
 
-  p <- ggplot(matrizComb, aes(x = !!parameter,
-                         y = !!metric,
-                         group = method,
-                         colour = method)) +
-  stat_summary(geom = "line",
-               fun = mean)
+  p <- ggplot(matrix_comb, aes(
+    x = !!parameter,
+    y = !!metric,
+    group = method,
+    colour = method
+  )) +
+    stat_summary(
+      geom = "line",
+      fun = mean,
+      size = 1
+    ) +
+    scale_y_continuous(
+      expand = c(0, 0),
+      limits = c(0, 1.05),
+      breaks = scales::pretty_breaks(n = 11)
+    )
 
   print(p)
 }
 
-#' Plot
+#' Plot metric equivalences between two methods
 #'
-#' @param matrizComb
-#' @param method
-#' @param parameter
+#' @param equivalences metric equivalences between two methods
 #'
-#' @return
+#' @return a plot
 #' @export
-#'
-#' @examples
 plot_choose_method <- function(equivalences, ...) {
-
   require(ggplot2)
   require(scales)
 
-col1name <- sym(names(equivalences)[1])
-col2name <- sym(names(equivalences)[2])
-p <- ggplot(equivalences, aes(x=!!col1name,
-                          y=!!col2name)) +
-  geom_point() +
-  scale_y_continuous(breaks= pretty_breaks()) +
-  geom_smooth(method = lm, aes(colour="regression line"))
+  col1name <- sym(names(equivalences)[1])
+  col2name <- sym(names(equivalences)[2])
+  p <- ggplot(equivalences, aes(
+    x = !!col1name,
+    y = !!col2name
+  )) +
+    geom_point() +
+    scale_y_continuous(breaks = pretty_breaks()) +
+    geom_smooth(method = lm, aes(colour = "regression line"))
 
-print(p)
+  print(p)
 }
