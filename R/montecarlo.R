@@ -7,6 +7,8 @@ var_env$n_iterations <- 10
 #'
 #' @param val Number of iterations
 #'
+#' @export
+#'
 #' @examples set_n_iterations(200)
 set_n_iterations <- function(val) {
   if (class(val) != "numeric" && class(val) != "integer") {
