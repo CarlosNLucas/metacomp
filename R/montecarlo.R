@@ -166,7 +166,7 @@ montecarlo <- function(matrix_comb,
     # we do the same with fun1, but the results vector is internal, so we
     # cannot search the input matrix for it
     for (param in names(params_fun1)) {
-      if (param != "results" & param != "effect_size") {
+      if (param != "results" && param != "effect_size") {
         params_fun1[param] <- matrix_comb[i, ][param]
       }
     }
